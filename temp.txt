@@ -1,0 +1,32 @@
+
+levels = [classification[0:8], classification[8:16] ,classification[16:24] ,classification[24:32]]
+
+groups = []
+for i in range(8):
+    groups.append(Group())
+    for j in range(4):
+        idx = randint(0,len(levels[j])-1)
+        groups[i].add_team(levels[j][idx])
+        del levels[j][idx]
+for i in range(8):
+    groups[i].semulate()
+    table , result = groups[i].results()
+    table = sorted(table, key=itemgetter('score'),reverse=True) 
+    print('=====================================================')
+    print_table(table)
+    print('=====================================================')
+
+    print_result (result)
+    print('=====================================================')
+
+
+
+
+for i in range(32):
+    teams.append("team_"+str(i))
+
+for i in range(32):
+    team = {"team" : teams[i] , "strength" : randint(1,4)}
+    classification.append(team)
+
+newlist = sorted(classification, key=itemgetter('strength'),reverse=True) 
