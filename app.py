@@ -34,6 +34,7 @@ def add_custom_team():
         response.config(text="you created more than 32 team")
 
         return
+# dd
 tables , results = [0]*8 , [0]*8
 tableLable = Label()
 resultLable = Label()
