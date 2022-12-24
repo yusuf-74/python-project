@@ -14,28 +14,34 @@ strengthLable = Label(text="Strength")
 strengthLable.pack()
 strength = Entry()
 strength.pack()
+response = Label()
+response.pack()
 
+complete = False
 counter = 0
-
+counterg = 0 
+group = 0
 def add_custom_team():
-    global counter
-    counter+=1
-    if counter <= 32:
+    global counterg , response
+    counterg+=1
+    if counterg <= 32:
         teams.append(str(team.get()))
         level = {"team" : str(team.get()) , "strength" : int(strength.get())}
         classification.append(level)
-        response = Label(text="created successfuly")
+        response.config(text="created successfuly")
 
-        response.pack()
     else :
-        response = Label(text="you created more than 32 team")
+        response.config(text="you created more than 32 team")
 
-        response.pack()
-    return
-
+        return
+tables , results = [0]*8 , [0]*8
+tableLable = Label()
+resultLable = Label()
+tableLable.pack()
+resultLable.pack()
 def random_complete():
-
-    global classification
+    global tables ,results, classification,complete,counter,generate,addTeamB
+    complete = True
     for i in range(32-len(teams)):
         teams.append("team_"+str(i))
 
@@ -55,21 +61,37 @@ def random_complete():
             del levels[j][idx]
     for i in range(8):
         groups[i].semulate()
-        table , result = groups[i].results()
-        table = sorted(table, key=itemgetter('score'),reverse=True) 
-        tableLable = Label(text=str(print_table(table)))
-        tableLable.pack()
-        resultLable = Label(text=str(print_result(result)))
-        resultLable.pack()
+        tables[i] , results[i] = groups[i].results()
+        tables[i] = sorted(tables[i], key=itemgetter('score'),reverse=True) 
+    tableLable.config(text=str('Group : '+ str(counter%8) +'\n')+str(print_table(tables[counter%8])))
+    resultLable.config(text=str(print_result(results[counter%8])))
+    generate.destroy()
+    addTeamB.destroy()
 
-    
+
+
+def next():
+    global counter
+    counter+=1
+    tableLable.config(text=str('Group : '+ str(counter%8) +'\n')+str(print_table(tables[counter%8])))
+    resultLable.config(text=str(print_result(results[counter%8])))
+        
+def back():
+    global counter
+    counter-=1
+    tableLable.config(text=str('Group : '+ str(counter%8) +'\n')+str(print_table(tables[counter%8])))
+    resultLable.config(text=str(print_result(results[counter%8])))
         
 
 
     
+nextb , backb = Button(text="next",command=next),Button(text="back",command=back) 
 
 
-generate = Button(text="generate and view",command=random_complete )
+nextb.pack()
+backb.pack()
+
+generate = Button(text="generate and view",command=random_complete)
 generate.pack()
 
 addTeamB = Button(text="append",command=add_custom_team )
