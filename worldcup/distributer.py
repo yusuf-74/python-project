@@ -54,7 +54,7 @@ class Group:
                 "team1":team1['team'],
                 "team2":team2['team'],
                 "score" : score1 + ' - ' + score2,
-                "winner":'tie'
+                "winner":'  tie        '
             }
         self.result.append(result)
 
@@ -76,21 +76,21 @@ class Group:
 
 def print_table(table):
     tables=""
-    tables+='   team name     |     points     \n'
+    tables+='   team name     |       points         \n'
     tables+='-----------------------------------\n'
 
     for i in range(4):
-        tables+= '     ' + table[i]['team_name'] + '      |' +'     ' + str(table[i]['score']) + '     ' + ('qulified\n' if i < 2 else '\n')
+        tables+= '     ' + table[i]['team_name'] + '      |' +'     ' + str(table[i]['score']) + '     ' + ('qulified\n' if i < 2 else '             \n')
     tables += '========================================\n'    
     return tables
 
 def print_result(result):
     results = ""
-    results+= '     team 1       |     team 2      |  score          |     winner   \n'
+    results+= '    team 1        VS     team 2       |     score     |     winner     \n'
     results+= '----------------------------------------------------------------------\n'
 
     for i in range(6):
-        results+= '     ' + result[i]['team1'] + '      |' \
+        results+= '     ' + result[i]['team1'] + '      VS' \
             '     ' + str(result[i]['team2']) + '     |'+\
                 '     ' + result[i]['score'] + '      |' \
                 '     ' + str(result[i]['winner']) + '     \n'
@@ -128,7 +128,7 @@ class KnockOut:
 
         for game in self.games:
             results+= '       ' + str(game['match'])      + '        |'  \
-                      '    ' + str(game['team1'])      + '     |' \
+                      '    ' + str(game['team1'])      + '     VS' \
                       '    ' + str(game['team2'])      + '     |'+\
                       '       ' + str(game['score1'])+' - '+str(game['score2'])       + '      |' \
                       '    ' + str(game['winner'])      + '     \n'

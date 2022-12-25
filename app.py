@@ -2,17 +2,17 @@ from tkinter import *
 from worldcup.distributer import *
 top = Tk()
 
-top.title("hommos")
-top.geometry('1024x700')
+top.title("Group 6")
+top.geometry('1024x500')
 
 addTeamLable = Label(text="Add Team")
 addTeamLable.pack()
-team = Entry()
+team = Entry(width=50)
 team.pack()
 
 strengthLable = Label(text="Strength")
 strengthLable.pack()
-strength = Entry()
+strength = Entry(width=50)
 strength.pack()
 response = Label(text='')
 response.pack()
@@ -48,7 +48,7 @@ def random_complete():
     
     complete = True
     for i in range(32-len(teams)):
-        teams.append("team_"+str(i))
+        teams.append("team_"+str(i) if i >= 10 else 'team_0'+str(i) )
 
     for i in range(32-len(classification)):
         team = {"team" : teams[i] , "strength" : randint(1,4)}
@@ -73,14 +73,14 @@ def random_complete():
         qualified.append(temp[1])
     
     
-    tableLable.config(text=str('Group : '+ str(counter%8) +'\n'+'----------\n')+str(print_table(tables[counter%8])))
+    tableLable.config(text=str('Group : '+ str((counter+1)%8 if (counter+1) % 8 != 0 else 8) +'\n'+'----------\n')+str(print_table(tables[counter%8])))
     resultLable.config(text=str(print_result(results[counter%8])))
     generate.destroy()
     addTeamB.destroy()
     nextb.place(x=950, y=250)
     backb.place(x=20, y = 250)
     nextStageB = Button(text='next stage' , command=next_stage)
-    nextStageB.place(x=440 , y=500)
+    nextStageB.place(x=490 , y=410)
     response.config(text='')
 
 
@@ -89,13 +89,13 @@ def random_complete():
 def next():
     global counter
     counter+=1
-    tableLable.config(text=str('Group : '+ str(counter%8) +'\n'+'----------\n')+str(print_table(tables[counter%8])))
+    tableLable.config(text=str('Group : '+ str((counter+1)%8 if (counter+1) % 8 != 0 else 8) +'\n'+'----------\n')+str(print_table(tables[counter%8])))
     resultLable.config(text=str(print_result(results[counter%8])))
         
 def back():
     global counter
     counter-=1
-    tableLable.config(text=str('Group : '+ str(counter%8) +'\n'+'----------\n')+str(print_table(tables[counter%8])))
+    tableLable.config(text=str('Group : '+ str((counter+1)%8 if (counter+1) % 8 != 0 else 8) +'\n'+'----------\n')+str(print_table(tables[counter%8])))
     resultLable.config(text=str(print_result(results[counter%8])))
         
 def next_stage():
