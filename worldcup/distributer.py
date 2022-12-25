@@ -1,19 +1,23 @@
-from random import randint,choice
+from random import randint
 from operator import itemgetter
 
 teams = [0]*32
-classification = []
+classification = [] 
+
 def create_game(team1 , team2):
     score1 = randint(0,4)
     score2 = randint(0,4)
     return {'team1':team1 , 'team2':team2 , 'score1':str(score1) , 'score2':str(score2)}
 
+# knockout games won't end with a tie
 def create_game_knock(team1 , team2 , day):
     score1 , score2 = 0 , 0
     while(score1 == score2):
         score1 = randint(0,4)
         score2 = randint(0,4)
     return {'match':day,'team1':team1 , 'team2':team2 , 'score1':str(score1) , 'score2':str(score2)}
+
+# groups stage
 class Group:
     def __init__(self):
         self.table = []
@@ -54,17 +58,15 @@ class Group:
                 "team1":team1['team'],
                 "team2":team2['team'],
                 "score" : score1 + ' - ' + score2,
-                "winner":'  tie        '
+                "winner":'  Tie        '
             }
         self.result.append(result)
 
-    def semulate(self):
+    def simulate(self):
         for i in range(4):
             for j in range(i+1,4):
                 self.game(**create_game(self.teams[i] , self.teams[j]))
     
-
-
     def results(self):
         return [self.table , self.result]
 
@@ -76,17 +78,17 @@ class Group:
 
 def print_table(table):
     tables=""
-    tables+='   team name     |       points         \n'
+    tables+='   Team name    |       points         \n'
     tables+='-----------------------------------\n'
 
     for i in range(4):
-        tables+= '     ' + str(table[i]['team_name']) + '      |' +'     ' + str(table[i]['score']) + '     ' + ('qulified\n' if i < 2 else '             \n')
+        tables+= '     ' + str(table[i]['team_name']) + '      |' +'     ' + str(table[i]['score']) + '     ' + ('Qulified\n' if i < 2 else '             \n')
     tables += '========================================\n'    
     return tables
 
 def print_result(result):
     results = ""
-    results+= '    team 1        VS     team 2       |     score     |     winner     \n'
+    results+= '    Team 1        VS     Team 2       |     score     |     winner     \n'
     results+= '----------------------------------------------------------------------\n'
 
     for i in range(6):
@@ -97,9 +99,9 @@ def print_result(result):
     
     return results
     
-
+# knockout stages
 class KnockOut:
-    def __init__(self,numberOfTeams , teams) -> None:
+    def __init__(self,numberOfTeams , teams):
         self.numberOfTeams = numberOfTeams
         self.teams = teams
         self.games = []
@@ -107,6 +109,7 @@ class KnockOut:
     
     def create_matches(self):
         for i in range(int(self.numberOfTeams/2)):
+            # list of teams is like(A1,A2,B1,B2....), so A1 should play vs B2 and A2 vs B1 etc...  
             self.games.append(create_game_knock(self.teams[i],self.teams[self.numberOfTeams-i-1],i+1))
         return self.games
     
@@ -123,7 +126,7 @@ class KnockOut:
     
     def print_games(self):
         results = ""
-        results+= '    match    |     team 1       VS     team 2       |      score     |     winner         \n'
+        results+= '    match    |     Team 1       VS     Team 2       |      score     |     winner         \n'
         results+= '-----------------------------------------------------------------------\n'
 
         for game in self.games:
@@ -134,7 +137,4 @@ class KnockOut:
                       '    ' + str(game['winner'])      + '     \n'
             results+= '------------------------------------------------------------------\n'
 
-
         return results
-        
-
