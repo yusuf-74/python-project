@@ -1,20 +1,23 @@
 from tkinter import *
 from worldcup.distributer import *
-top = Tk()
+root = Tk()
+bg = PhotoImage(file = "./qatar-2022-world-cup-logo-black-color-print-png-11668697201tgpljavrk0.png")
+root.title("World Cup GUI simulation_Group 6")
+root.geometry('1024x500')
+label1 = Label( root, image = bg)
+label1.place(x = 0, y = 0)
 
-top.title("Group 6")
-top.geometry('1024x500')
-
-addTeamLable = Label(text="Add Team")
+addTeamLable = Label(text="Add Team", bg = 'white', fg = 'black')
 addTeamLable.pack()
-teamEntry = Entry(width=50)
+teamEntry = Entry(width=50, bg = 'white', fg = 'black')
 teamEntry.pack()
-
-strengthLable = Label(text="Strength")
+x = Label(text="", bg = '#DECEC8', fg = 'black')
+x.pack()
+strengthLable = Label(text="Strength", bg = 'white', fg = 'black')
 strengthLable.pack()
-strength = Entry(width=50)
+strength = Entry(width=50, bg = 'white', fg = 'black')
 strength.pack()
-response = Label(text='')
+response = Label(text='', bg = '#DECEC8')
 response.pack()
 
 complete = False
@@ -29,7 +32,7 @@ def add_custom_team():
         teams.append(str(teamEntry.get()))
         level = {"team" : str(teamEntry.get()) , "strength" : int(strength.get())}
         classification.append(level)
-        response.config(text="created successfuly")
+        response.config(text="created successfuly", bg = 'white', fg = 'black')
 
     else :
         response.config(text="you created more than 32 team")
@@ -37,8 +40,8 @@ def add_custom_team():
 
     return
 tables , results = [0]*8 , [0]*8
-tableLable = Label()
-resultLable = Label()
+tableLable = Label( bg = '#DECEC8')
+resultLable = Label( bg = '#DECEC8')
 tableLable.pack()
 resultLable.pack()
 
@@ -52,7 +55,7 @@ def random_complete():
     global counterg
     for i in range(counterg,32):
         teams.append("team_"+str(i) if i >= 10 else 'team_0'+str(i) )
-        team = {"team" : 'teams_'+str(i) if i >= 10 else 'team_0'+str(i) , "strength" : randint(1,4)}
+        team = {"team" : 'team_'+str(i) if i >= 10 else 'team_0'+str(i) , "strength" : randint(1,4)}
         classification.append(team)
         
     print(classification)
@@ -72,7 +75,7 @@ def random_complete():
             groups[i].add_team(levels[j][idx])
             del levels[j][idx]
     for i in range(8):
-        groups[i].semulate()
+        groups[i].simulate()
         tables[i] , results[i] = groups[i].results()
         tables[i] = sorted(tables[i], key=itemgetter('score'),reverse=True) 
         temp = groups[i].qualified()
@@ -90,7 +93,7 @@ def random_complete():
     strengthLable.destroy()
     nextb.place(x=950, y=250)
     backb.place(x=20, y = 250)
-    nextStageB = Button(text='next stage' , command=next_stage)
+    nextStageB = Button(text='next stage' , command=next_stage, bg = 'white', fg = 'black')
     nextStageB.place(x=490 , y=410)
     response.config(text='')
 
@@ -138,19 +141,21 @@ def next_stage():
     
 
 
-nextStageB = Button(text='next stage' , command=next_stage)
+nextStageB = Button(text='next stage' , command=next_stage , bg = 'white', fg = 'black')
 
     
-nextb , backb = Button(text="next",command=next),Button(text="back",command=back) 
+nextb = Button(text="next",command=next, bg = 'white', fg = 'black')
+backb = Button(text="back",command=back, bg = 'white', fg = 'black') 
 
 
-
-generate = Button(text="Generate and view",command=random_complete,width=30)
-generate.pack()
-space = Label()
-space.pack()
-addTeamB = Button(text="Add team",command=add_custom_team,width=25 )
+addTeamB = Button(text="Add team",command=add_custom_team,width=25, bg = 'white', fg = 'black' )
 addTeamB.pack()
+space = Label(bg = '#DECEC8')
+space.pack()
+generate = Button(text="Generate and view",command=random_complete,width=30, bg = 'white', fg = 'black')
+generate.pack()
 
 
-top.mainloop()
+
+
+mainloop()

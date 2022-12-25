@@ -1,19 +1,23 @@
-from random import randint,choice
+from random import randint
 from operator import itemgetter
 
 teams = [0]*32
-classification = []
+classification = [] 
+
 def create_game(team1 , team2):
     score1 = randint(0,4)
     score2 = randint(0,4)
     return {'team1':team1 , 'team2':team2 , 'score1':str(score1) , 'score2':str(score2)}
 
+# knockout games won't end with a tie
 def create_game_knock(team1 , team2 , day):
     score1 , score2 = 0 , 0
     while(score1 == score2):
         score1 = randint(0,4)
         score2 = randint(0,4)
     return {'match':day,'team1':team1 , 'team2':team2 , 'score1':str(score1) , 'score2':str(score2)}
+
+# groups stage
 class Group:
     def __init__(self):
         self.table = []
@@ -29,6 +33,7 @@ class Group:
         if eval(score1)> eval(score2):
             for team in self.table:
                 if team['team_name'] == team1['team']:
+                    print(team1)
                     team['score']+=3
             result = {
                 "team1":team1['team'],
@@ -58,13 +63,11 @@ class Group:
             }
         self.result.append(result)
 
-    def semulate(self):
+    def simulate(self):
         for i in range(4):
             for j in range(i+1,4):
                 self.game(**create_game(self.teams[i] , self.teams[j]))
     
-
-
     def results(self):
         return [self.table , self.result]
 
@@ -97,9 +100,9 @@ def print_result(result):
     
     return results
     
-
+# knockout stages
 class KnockOut:
-    def __init__(self,numberOfTeams , teams) -> None:
+    def __init__(self,numberOfTeams , teams):
         self.numberOfTeams = numberOfTeams
         self.teams = teams
         self.games = []
@@ -107,6 +110,7 @@ class KnockOut:
     
     def create_matches(self):
         for i in range(int(self.numberOfTeams/2)):
+            # list of teams is like(A1,A2,B1,B2....), so A1 should play vs B2 and A2 vs B1 etc...  
             self.games.append(create_game_knock(self.teams[i],self.teams[self.numberOfTeams-i-1],i+1))
         return self.games
     
@@ -134,7 +138,4 @@ class KnockOut:
                       '    ' + str(game['winner'])      + '     \n'
             results+= '------------------------------------------------------------------\n'
 
-
         return results
-        
-
