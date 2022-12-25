@@ -123,8 +123,8 @@ class KnockOut:
     
     def print_games(self):
         results = ""
-        results+= '    match    |     team 1       |     team 2      |         score          |     winner   \n'
-        results+= '------------------------------------------------------------------------------------------\n'
+        results+= '    match    |     team 1       VS     team 2       |      score     |     winner         \n'
+        results+= '-----------------------------------------------------------------------\n'
 
         for game in self.games:
             results+= '       ' + str(game['match'])      + '        |'  \
@@ -132,7 +132,7 @@ class KnockOut:
                       '    ' + str(game['team2'])      + '     |'+\
                       '       ' + str(game['score1'])+' - '+str(game['score2'])       + '      |' \
                       '    ' + str(game['winner'])      + '     \n'
-            results+= '--------------------------------------------------------------------------------------\n'
+            results+= '------------------------------------------------------------------\n'
 
 
         return results

@@ -7,8 +7,8 @@ top.geometry('1024x500')
 
 addTeamLable = Label(text="Add Team")
 addTeamLable.pack()
-team = Entry(width=50)
-team.pack()
+teamEntry = Entry(width=50)
+teamEntry.pack()
 
 strengthLable = Label(text="Strength")
 strengthLable.pack()
@@ -23,18 +23,19 @@ counterg = 0
 group = 0
 qualified = []
 def add_custom_team():
-    global counterg , response
+    global counterg , response, teamEntry,strength
     counterg+=1
     if counterg <= 32:
-        teams.append(str(team.get()))
-        level = {"team" : str(team.get()) , "strength" : int(strength.get())}
+        teams.append(str(teamEntry.get()))
+        level = {"team" : str(teamEntry.get()) , "strength" : int(strength.get())}
         classification.append(level)
         response.config(text="created successfuly")
 
     else :
         response.config(text="you created more than 32 team")
+    
 
-        return
+    return
 tables , results = [0]*8 , [0]*8
 tableLable = Label()
 resultLable = Label()
@@ -44,7 +45,7 @@ resultLable.pack()
 
 
 def random_complete():
-    global tables ,results, classification,complete,counter,generate,addTeamB ,nextb ,backb
+    global tables ,results, classification,complete,counter,generate,addTeamB ,nextb ,backb,team,strength
     
     complete = True
     for i in range(32-len(teams)):
@@ -77,6 +78,10 @@ def random_complete():
     resultLable.config(text=str(print_result(results[counter%8])))
     generate.destroy()
     addTeamB.destroy()
+    teamEntry.destroy()
+    strength.destroy()
+    addTeamLable.destroy()
+    strengthLable.destroy()
     nextb.place(x=950, y=250)
     backb.place(x=20, y = 250)
     nextStageB = Button(text='next stage' , command=next_stage)
@@ -101,15 +106,16 @@ def back():
 def next_stage():
     global qualified , nextStageB
     if len(qualified) == 1:
-        tableLable.config(text='the champion is : '+str(qualified[0]))
+        tableLable.config(text='The CHAMPION is : '+str(qualified[0]))
+        response.config(text='---------\n| Winner |\n----------')
         nextStageB.destroy()
         return
     if len(qualified) == 8:
         response.config(text='----------------\n| quarter final |\n-----------------')
     elif len(qualified) == 4:
-        response.config(text='---------------\n| semi final |\n----------------')
+        response.config(text='------------\n| semi final |\n-------------')
     elif len(qualified) == 2:
-        response.config(text='----------\n| final |\n----------')
+        response.config(text='--------\n| final |\n--------')
     else :
         response.config(text='-------------\n| round 16 |\n--------------')
     
@@ -135,11 +141,11 @@ nextb , backb = Button(text="next",command=next),Button(text="back",command=back
 
 
 
-generate = Button(text="generate and view",command=random_complete)
+generate = Button(text="Generate and view",command=random_complete,width=30)
 generate.pack()
 space = Label()
 space.pack()
-addTeamB = Button(text="add team",command=add_custom_team )
+addTeamB = Button(text="Add team",command=add_custom_team,width=25 )
 addTeamB.pack()
 
 
