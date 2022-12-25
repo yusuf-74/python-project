@@ -48,12 +48,15 @@ def random_complete():
     global tables ,results, classification,complete,counter,generate,addTeamB ,nextb ,backb,team,strength
     
     complete = True
-    for i in range(32-len(teams)):
+    print(classification)
+    global counterg
+    for i in range(counterg,32):
         teams.append("team_"+str(i) if i >= 10 else 'team_0'+str(i) )
-
-    for i in range(32-len(classification)):
-        team = {"team" : teams[i] , "strength" : randint(1,4)}
+        team = {"team" : 'teams_'+str(i) if i >= 10 else 'team_0'+str(i) , "strength" : randint(1,4)}
         classification.append(team)
+        
+    print(classification)
+
 
     classification = sorted(classification, key=itemgetter('strength'),reverse=True) 
 
@@ -62,7 +65,10 @@ def random_complete():
     for i in range(8):
         groups.append(Group())
         for j in range(4):
-            idx = randint(0,len(levels[j])-1)
+            try:
+                idx = randint(0,len(levels[j])-1)
+            except:
+                idx = 0
             groups[i].add_team(levels[j][idx])
             del levels[j][idx]
     for i in range(8):
@@ -74,7 +80,7 @@ def random_complete():
         qualified.append(temp[1])
     
     
-    tableLable.config(text=str('Group : '+ str((counter+1)%8 if (counter+1) % 8 != 0 else 8) +'\n'+'----------\n')+str(print_table(tables[counter%8])))
+    tableLable.config(text=str('Group : '+ str((counter+1)%8 if (counter+1) % 8 != 0 else '8') +'\n'+'----------\n')+str(print_table(tables[counter%8])))
     resultLable.config(text=str(print_result(results[counter%8])))
     generate.destroy()
     addTeamB.destroy()
@@ -89,12 +95,10 @@ def random_complete():
     response.config(text='')
 
 
-
-
 def next():
     global counter
     counter+=1
-    tableLable.config(text=str('Group : '+ str((counter+1)%8 if (counter+1) % 8 != 0 else 8) +'\n'+'----------\n')+str(print_table(tables[counter%8])))
+    tableLable.config(text=str('Group : '+ str((counter+1)%8 if (counter+1) % 8 != 0 else '8') +'\n'+'----------\n')+str(print_table(tables[counter%8])))
     resultLable.config(text=str(print_result(results[counter%8])))
         
 def back():
@@ -147,10 +151,6 @@ space = Label()
 space.pack()
 addTeamB = Button(text="Add team",command=add_custom_team,width=25 )
 addTeamB.pack()
-
-
-
-
 
 
 top.mainloop()

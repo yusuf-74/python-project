@@ -1,7 +1,7 @@
 from random import randint,choice
 from operator import itemgetter
 
-teams = []
+teams = [0]*32
 classification = []
 def create_game(team1 , team2):
     score1 = randint(0,4)
@@ -80,7 +80,7 @@ def print_table(table):
     tables+='-----------------------------------\n'
 
     for i in range(4):
-        tables+= '     ' + table[i]['team_name'] + '      |' +'     ' + str(table[i]['score']) + '     ' + ('qulified\n' if i < 2 else '             \n')
+        tables+= '     ' + str(table[i]['team_name']) + '      |' +'     ' + str(table[i]['score']) + '     ' + ('qulified\n' if i < 2 else '             \n')
     tables += '========================================\n'    
     return tables
 
